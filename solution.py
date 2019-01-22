@@ -6,6 +6,7 @@
 # args = parser.parse_args()
 
 import sys
+import os
 
 def main():
     # Checks if the number of arguments is correct, else exits the script.
@@ -21,6 +22,10 @@ def main():
     except IOError:
         print('Could not read the file:{0}'.format(filename))
         sys.exit()        
+
+    if os.stat(filename).st_size == 0:
+        print('File is empty.')
+        sys.exit()
 
     lines = f.read().splitlines()
     f.close()
@@ -46,6 +51,14 @@ def main():
                 flag = 0
             elif flag == 1:
                 circuit.append(line)
+        
+        if len(circuit) == 0:
+            print('The netlist file doesnot contain ".circuit" and/or ".end" line.')
+            sys.exit()
+
+        if circuit[-1] != '.end':
+            print('The netlist file doesnot contain ".end" line.')
+            sys.exit()
 
         final_circuit = []   
         for line in circuit:
