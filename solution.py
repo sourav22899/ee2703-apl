@@ -41,35 +41,35 @@ def main():
         Returns:
             A list describing the circuit removing all the comments and other parts.
         """
-        circuit,flag = [],0
+        final_circuit,flag,circuit = [],0,[]
         for line in lines:
-            if line == '.circuit':
-                circuit.append(line)
-                flag = 1
-            elif line == '.end' and flag == 1:
-                circuit.append(line)
-                flag = 0
-            elif flag == 1:
-                circuit.append(line)
-        
-        if len(circuit) == 0:
-            print('The netlist file doesnot contain ".circuit" and/or ".end" line.')
-            sys.exit()
-
-        if circuit[-1] != '.end':
-            print('The netlist file doesnot contain ".end" line.')
-            sys.exit()
-
-        final_circuit = []   
-        for line in circuit:
-            words = line.split()
+            words = line.strip().split()
             newline = []
             for word in words:
                 if word[0] == '#':
                     break
                 newline.append(word)
             newline = ' '.join(newline)
-            final_circuit.append(newline)
+            circuit.append(newline)
+        
+        for line in circuit:
+            if line == '.circuit':
+                final_circuit.append(line)
+                flag = 1
+            elif line == '.end' and flag == 1:
+                final_circuit.append(line)
+                flag = 0
+            elif flag == 1:
+                final_circuit.append(line)
+        
+        if len(final_circuit) == 0:
+            print('The netlist file doesnot contain ".circuit" and/or ".end" line.')
+            sys.exit()
+
+        if final_circuit[-1] != '.end':
+            print('The netlist file doesnot contain ".end" line.')
+            sys.exit()
+
         return final_circuit
 
     final_circuit = ExtractCircuit(lines)
