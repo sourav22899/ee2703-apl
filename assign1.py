@@ -11,7 +11,7 @@ import os
 def main():
     # Checks if the number of arguments is correct, else exits the script.
     if len(sys.argv) != 2:
-        print("Incorrect format.The correct format is $ python3 solution.py filename")
+        print("Incorrect format.The correct format is $ python3 assign1.py filename")
         sys.exit()
     else:
         filename = sys.argv[1]
