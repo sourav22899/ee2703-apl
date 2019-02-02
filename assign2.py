@@ -150,12 +150,10 @@ def main():
     nodes = Nodes(final_circuit)
     ind_curr = np.zeros(len(nodes),dtype = dtype)
     graph = np.zeros((len(nodes),len(nodes)),dtype = np.int32)
-    Z = np.zeros_like(graph)
-    V = np.zeros_like(graph)
+    Z,V = np.zeros_like(graph),np.zeros_like(graph)
     R,C,L = -np.ones_like(graph,dtype = dtype),-np.ones_like(graph,dtype = dtype),\
                                             -np.ones_like(graph,dtype = dtype)
     variables = nodes.copy()                                      
-    n_variables = 0   
     for line in final_circuit:
         if line[0] == 'V':
             words = line.split()
@@ -225,9 +223,9 @@ def main():
                 n_eq += 1
 
     if ac_flag:
-        I = (R>0)*R + (C>0)*(np.reciprocal(1j*w*C)) + (L > 0)*(1j*w*L)
+        I = (R > 0)*R + (C > 0)*(np.reciprocal(1j*w*C)) + (L > 0)*(1j*w*L)
     else:
-        I = (R>0)*R
+        I = (R > 0)*R
     
     for i in range(len(nodes)-1):
         for j in range(len(nodes)):
