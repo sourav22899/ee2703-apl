@@ -198,34 +198,22 @@ def main():
                 sys.exit()
         if x == 'R':
             Z[pos,neg],Z[neg,pos] = 1,1
-            if R[pos,neg] == -1:
-                R[pos,neg],R[neg,pos] = value,value
-            else:
-                R[pos,neg] = (float(R[pos,neg]*value)/(value + R[pos,neg]))
-                R[neg,pos] = R[pos,neg]
+            R[pos,neg] = value if R[pos,neg] == -1 else ((R[pos,neg]*value)/(value + R[pos,neg]))
+            R[neg,pos] = R[pos,neg]
         if x == 'C' and ac_flag:
             Z[pos,neg],Z[neg,pos] = 1,1
-            if C[pos,neg] == -1:
-                C[pos,neg],C[neg,pos] = value,value
-            else:
-                C[pos,neg] += value 
-                C[neg,pos] = C[pos,neg]           
+            C[pos,neg] = value if C[pos,neg] == -1 else C[pos,neg] + value
+            C[neg,pos] = C[pos,neg]           
         if x == 'L':
             if ac_flag:
                 Z[pos,neg],Z[neg,pos] = 1,1
-                if L[pos,neg] == -1:
-                    L[pos,neg],L[neg,pos] = value,value
-                else:
-                    L[pos,neg] = (float(L[pos,neg]*value)/(value + L[pos,neg]))
-                    L[neg,pos] = L[pos,neg]
+                L[pos,neg] = value if L[pos,neg] == -1 else ((L[pos,neg]*value)/(value + L[pos,neg]))
+                L[neg,pos] = L[pos,neg]
             else:
                 A[n_eq,pos],A[n_eq,neg] = 1,-1
                 n_eq += 1
 
-    if ac_flag:
-        I = (R > 0)*R + (C > 0)*(np.reciprocal(1j*w*C)) + (L > 0)*(1j*w*L)
-    else:
-        I = (R > 0)*R
+    I = (R > 0)*R + (C > 0)*(np.reciprocal(1j*w*C)) + (L > 0)*(1j*w*L) if ac_flag else (R > 0)*R
     
     for i in range(len(nodes)-1):
         for j in range(len(nodes)):
@@ -233,10 +221,7 @@ def main():
                 A[n_eq,i] += np.reciprocal(I[i,j])
                 A[n_eq,j] -= np.reciprocal(I[i,j])
             if graph[i,j] and V[i,j]:
-                if sum(A[:,V[i,j]]) != 0:
-                    A[n_eq,abs(V[i,j])] += np.sign(V[i,j])
-                else:
-                    A[n_eq,abs(V[i,j])] += np.sign(V[i,j])
+                A[n_eq,abs(V[i,j])] += np.sign(V[i,j])               
         b[n_eq] -= ind_curr[i]
         n_eq += 1
     A[n_eq,0] = 1
