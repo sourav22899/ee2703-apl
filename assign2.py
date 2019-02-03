@@ -75,7 +75,7 @@ def main():
         """
         Returns the numeric value from exponential notation.
         """
-        if Str.isnumeric():
+        if Str.isnumeric() or '-' in Str or '.' in Str:
             return float(Str)
         if Str.isalnum() or '-' in Str or '.' in Str:
             i = Str.index('e')
