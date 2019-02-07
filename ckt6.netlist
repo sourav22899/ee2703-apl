@@ -2,6 +2,6 @@
 V1 n1 GND ac 5 0
 C1 n1 n2 1
 R1 n2 n3 1e3
-L1 n3 GND 1e-6
+L1 n3 GND 1
 .end
 .ac V1 1e3

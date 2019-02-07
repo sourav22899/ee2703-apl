@@ -6,4 +6,4 @@ C1 n3 GND 2.485e-12
 L2 n3 n4 80.96e-12
 R2 n4 GND 4e3
 .end
-.ac V1 1e3
+.ac V1 1e6
