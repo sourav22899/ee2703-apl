@@ -46,6 +46,17 @@ def main():
         V[ii] = 1.0
         error[k] = np.max(abs(V - V_old))
 
+    plt.figure(figsize=(8,8))
+    plt.grid()
+    plt.title('Contour plot of the potential')
+    plt.scatter((ii[0]-Nx/2)*(2/Nx),(ii[1]-Ny/2)*(2/Ny),s=4,color='r',marker='o')
+    cp = plt.contour(X,Y,V,20)
+    levels = np.linspace(0,1,11)
+    plt.clabel(cp,levels,inline=True,fontsize = 10)
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.show()
+
     log_error = np.log(error)
     error_new = log_error
     n_iter = np.arange(1,Niter+1)
@@ -98,16 +109,6 @@ def main():
     surf = ax.plot_surface(X, Y, V,cmap = cm.jet,linewidth=0, antialiased=False)
     fig.colorbar(surf, shrink=0.5, aspect=5)
     plt.title('3-D Surface plot of the potential')
-    plt.xlabel('x')
-    plt.ylabel('y')
-    plt.show()
-
-    plt.figure(figsize=(8,8))
-    plt.grid()
-    plt.title('Contour plot of the potential')
-    cp = plt.contour(X,Y,V,20)
-    levels = np.linspace(0,1,11)
-    plt.clabel(cp,levels,inline=True,fontsize = 10)
     plt.xlabel('x')
     plt.ylabel('y')
     plt.show()
