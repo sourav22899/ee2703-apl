@@ -7,3 +7,4 @@ Applied Programming Lab,IIT Madras (Spring 2019)
 2. NumPy == 1.15.2
 3. SciPy == 1.1.0
 4. Matplotlib == 3.0.1
+5. SymPy == 1.3
